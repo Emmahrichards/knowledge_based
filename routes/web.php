@@ -1,7 +1,5 @@
-<?php
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\AnswerController;
 
-use Illuminate\Support\Facades\Route;
-
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('questions', QuestionController::class);
+Route::post('questions/{question}/answers', [AnswerController::class, 'store'])->name('answers.store');
