@@ -1,8 +1,16 @@
-<?php
+namespace App\Models;
 
-namespace App\Http\Controllers;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-abstract class Controller
+class Answer extends Model
 {
-    //
+    use HasFactory;
+
+    protected $fillable = ['body', 'question_id'];
+
+    public function question()
+    {
+        return $this->belongsTo(Question::class);
+    }
 }
