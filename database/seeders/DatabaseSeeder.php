@@ -3,21 +3,27 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
+     *
+     * @return void
      */
-    public function run(): void
+    public function run()
     {
-        // User::factory(10)->create();
+        // Call the AnswersTableSeeder
+        $this->call(AnswersTableSeeder::class);
 
+        // Create a single user with specific attributes
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        // If you want to create multiple users, you can use the following line instead
+        // User::factory(10)->create();
     }
 }
