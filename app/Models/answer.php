@@ -1,23 +1,20 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace App\Models;
 
-class CreateAnswersTable extends Migration
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Answer extends Model
 {
-    public function up()
-    {
-        Schema::create('answers', function (Blueprint $table) {
-            $table->id();
-            $table->text('body');
-            $table->foreignId('question_id')->constrained()->onDelete('cascade');
-            $table->timestamps();
-        });
-    }
+    use HasFactory;
 
-    public function down()
+    // Specify which attributes can be mass-assigned
+    protected $fillable = ['body', 'question_id'];
+
+    // Define the inverse of the relationship with the Question model
+    public function questions()
     {
-        Schema::dropIfExists('answers');
+        return $this->belongsTo(answer::class); // Use the correct model name with proper casing
     }
 }
