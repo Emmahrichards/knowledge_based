@@ -10,13 +10,15 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->text('content'); // Adjust fields as necessary
+            $table->string('title');
+            $table->text('description');
             $table->timestamps();
         });
     }
 
     public function down()
     {
-     Schema::dropIfExists('questions');
+        Schema::dropIfExists('questions');
     }
 }
+

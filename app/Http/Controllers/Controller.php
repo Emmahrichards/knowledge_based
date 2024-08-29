@@ -1,21 +1,12 @@
 <?php
 
-namespace App\Models;
+// app/Http/Controllers/DashboardController.php
+namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-class Answer extends Model
+class DashboardController extends Controller
 {
-    use HasFactory;
-
-    // Specify which attributes can be mass-assigned
-    protected $fillable = ['body', 'question_id'];
-
-    // Define the inverse of the relationship with the Question model
-    public function questions()
+    public function index()
     {
-        return $this->belongsTo(answer::class); // Use the correct model name with proper casing
+        return view('dashboard.index');
     }
 }
-

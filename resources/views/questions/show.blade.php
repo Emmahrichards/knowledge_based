@@ -1,31 +1,19 @@
-@extends('layout')
-
-@section('content')
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ $question->title }}</title>
+</head>
+<body>
     <h1>{{ $question->title }}</h1>
-    <p>{{ $question->body }}</p>
+    <p>{{ $question->description }}</p>
 
     <h2>Answers</h2>
     <ul>
         @foreach($question->answers as $answer)
-            <li>{{ $answer->body }}</li>
+            <li>{{ $answer->answer_text }}</li>
         @endforeach
     </ul>
 
-    <h2>Add an Answer</h2>
-
-    @if ($errors->any())
-        <div>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    <form method="POST" action="{{ route('answers.store', $question->id) }}">
-        @csrf
-        <textarea name="body" id="body"></textarea>
-        <button type="submit">Submit</button>
-    </form>
-@endsection
+    <a href="{{ route('index.php') }}">Back to Questions</a>
+</body>
+</html>
