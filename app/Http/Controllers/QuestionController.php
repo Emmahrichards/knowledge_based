@@ -1,10 +1,11 @@
 <?php
 // Include necessary files for the AnswerModel and AnswerView
 
+use App\Models\Answer;
 use Illuminate\Routing\Controller;
 
-require_once 'AnswerModel.php';
-require_once 'AnswerView.php';
+require_once 'Answer.php';
+//require_once 'AnswerView.php';
 
 // Assuming a base Controller class exists
 class QuestionController extends Controller
@@ -16,14 +17,15 @@ class QuestionController extends Controller
     public function __construct()
     {
         parent::__construct(); // Call the parent constructor if needed
-        $this->answerModel = new AnswerModel();
-        $this->answerView = new AnswerView();
+        $this-> answerModel = new Answer();
+        //$this->answerModel = new Answer();
+       // $this->answerView = new AnswerView();
     }
 
     // Main method to handle different actions
     public function handleRequest()
     {
-        // Check the action parameter in the request
+        // Check the action parameter in the requests
         if (isset($_GET['action'])) {
             switch ($_GET['action']) {
                 case 'listAnswers':
@@ -48,8 +50,7 @@ class QuestionController extends Controller
 
     // List all answers
     private function listAnswers()
-    {
-        $answers = $this->answerModel->getAllAnswers();
+    {$answers = $this->answerModel->getAllAnswers();
         $this->answerView->render('answer_list', ['answers' => $answers]);
     }
 

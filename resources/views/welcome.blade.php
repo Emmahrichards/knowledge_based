@@ -16,23 +16,23 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home</a>
+                <a class="nav-link" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                <a class="nav-link" href="#">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                <a class="nav-link" href="#">Contact</a>
                 </li>
-            </ul>
-        </div>
-    </nav>
+                </ul>
+                </div>
+                </nav>
 
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12 text-center">
                 <h1 class="mb-4">Welcome to the Knowledge Base</h1>
-                <p class="lead">Find articles and tutorials to help you understand and use our platform.</p>
+                <p class="lead">Everybody is smarter than anybody.</p>
             </div>
         </div>
         <div class="row mt-4">
