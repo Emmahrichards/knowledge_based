@@ -1,104 +1,118 @@
 <?php
-// Include necessary files for the AnswerModel and AnswerView
 
-use App\Models\Answer;
+namespace App\Http\Controllers;
+
+use App\Models\Question; // Assuming you have a Question model
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-require_once 'Answer.php';
-//require_once 'AnswerView.php';
-
-// Assuming a base Controller class exists
 class QuestionController extends Controller
 {
-    private $answerModel;
-    private $answerView;
-
-    // Constructor
-    public function __construct()
+    /**
+     * Display a listing of questions.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function index()
     {
-        parent::__construct(); // Call the parent constructor if needed
-        $this-> answerModel = new Answer();
-        //$this->answerModel = new Answer();
-       // $this->answerView = new AnswerView();
+        $questions = Question::all(); // Fetch all questions
+        return view('questions.index', compact('questions')); // Return a view with questions
     }
 
-    // Main method to handle different actions
-    public function handleRequest()
+    /**
+     * Show the form for creating a new question.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create()
     {
-        // Check the action parameter in the requests
-        if (isset($_GET['action'])) {
-            switch ($_GET['action']) {
-                case 'listAnswers':
-                    $this->listAnswers();
-                    break;
-                case 'viewAnswer':
-                    $this->viewAnswer($_GET['id']);
-                    break;
-                case 'createAnswer':
-                    $this->createAnswer();
-                    break;
-                case 'deleteAnswer':
-                    $this->deleteAnswer($_GET['id']);
-                    break;
-                default:
-                    $this->showError("Action not recognized.");
-            }
-        } else {
-            $this->listAnswers(); // Default action if no action parameter is present
-        }
+        return view('questions.create'); // Return the form view
     }
 
-    // List all answers
-    private function listAnswers()
-    {$answers = $this->answerModel->getAllAnswers();
-        $this->answerView->render('answer_list', ['answers' => $answers]);
+    /**
+     * Store a newly created question in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'body' => 'required|string',
+        ]);
+
+        Question::create($request->all()); // Create a new question
+
+        return redirect()->route('questions.index')->with('success', 'Question created successfully.');
     }
 
-    // View a specific answer by its ID
-    private function viewAnswer($id)
+    /**
+     * Display the specified question.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function show($id)
     {
-        $answer = $this->answerModel->getAnswerById($id);
-        if ($answer) {
-            $this->answerView->render('answer_detail', ['answer' => $answer]);
-        } else {
-            $this->showError("Answer not found.");
-        }
+        $question = Question::findOrFail($id); // Fetch the question by ID
+        return view('questions.show', compact('question')); // Return the question view
     }
 
-    // Create a new answer
-    private function createAnswer()
+    /**
+     * Show the form for editing the specified question.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function edit($id)
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $text = $_POST['text'] ?? '';
-            $questionId = $_POST['question_id'] ?? 0;
-
-            if ($this->answerModel->addAnswer($text, $questionId)) {
-                $this->listAnswers(); // Redirect to the list of answers
-            } else {
-                $this->showError("Error creating answer.");
-            }
-        } else {
-            $this->answerView->render('answer_form');
-        }
+        $question = Question::findOrFail($id); // Fetch the question by ID
+        return view('questions.edit', compact('question')); // Return the edit form
     }
 
-    // Delete an answer by its ID
-    private function deleteAnswer($id)
+    /**
+     * Update the specified question in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, $id)
     {
-        if ($this->answerModel->deleteAnswer($id)) {
-            $this->listAnswers(); // Redirect to the list of answers
-        } else {
-            $this->showError("Error deleting answer.");
-        }
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'body' => 'required|string',
+        ]);
+
+        $question = Question::findOrFail($id); // Fetch the question by ID
+        $question->update($request->all()); // Update the question
+
+        return redirect()->route('questions.index')->with('success', 'Question updated successfully.');
     }
 
-    // Display an error message
-    private function showError($message)
+    /**
+     * Remove the specified question from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
     {
-        $this->answerView->render('error', ['message' => $message]);
+        $question = Question::findOrFail($id); // Fetch the question by ID
+        $question->delete(); // Delete the question
+
+        return redirect()->route('questions.index')->with('success', 'Question deleted successfully.');
+    }
+
+    /**
+     * Handle JSON responses for questions.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function questionJson()
+    {
+        $questions = Question::all(); // Fetch all questions
+        return response()->json($questions); // Return JSON response
     }
 }
-
-// Create an instance of the controller and handle the request
-$controller = new QuestionController();
-$controller->handleRequest();

@@ -15,13 +15,13 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // Call the AnswersTableSeeder
-        $this->call(AnswersTableSeeder::class);
-
+        //$this->call(AnswersTableSeeder::class);
+        $this->call(CategorySeeder::class);
         // Create a single user with specific attributes
-        User::factory()->create([
+        /*User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-        ]);
+        ]);*/
 
         // If you want to create multiple users, you can use the following line instead
         // User::factory(10)->create();
