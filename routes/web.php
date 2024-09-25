@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Question; // Import the Question model
 
 // Home route
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/dashboard', function () {
+    return view('index');})->name('dashboard');
+
 
 // Route to store a question
 Route::post('store/question', [QuestionController::class, 'store'])->name('store.question');

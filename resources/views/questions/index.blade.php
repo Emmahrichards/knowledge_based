@@ -25,7 +25,7 @@
             <h1 class="text-center">Welcome to the Dashboard</h1>
             <p class="text-center">Here you can manage your knowledge base and view important information.</p>
             <div class="text-center">
-                <a href="{{ route('index.php') }}" class="btn btn-primary">View Questions</a>
+                <a href="{{ route('dashboard') }}" class="btn btn-primary">View Questions</a>
                 <!-- Add more buttons or links as needed -->
             </div>
         </div>

@@ -35,23 +35,7 @@
                 <p class="lead">Everybody is smarter than anybody.</p>
             </div>
         </div>
-        <div class="row mt-4">
-            <div class="col-md-12">
-                @if($articles->isEmpty())
-                    <div class="alert alert-warning" role="alert">
-                        No articles available.
-                    </div>
-                @else
-                    <div class="list-group">
-                        @foreach($articles as $article)
-                            <a href="#" class="list-group-item list-group-item-action">
-                                <h5 class="mb-1">{{ $article->title }}</h5>
-                                <p class="mb-1">{{ Str::limit($article->content, 150) }}</p>
-                                <small>Published on {{ $article->created_at->format('M d, Y') }}</small>
-                            </a>
-                        @endforeach
-                    </div>
-                @endif
+
             </div>
         </div>
     </div>

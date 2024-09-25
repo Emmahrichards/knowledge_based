@@ -57,7 +57,7 @@ class AnswerController extends Controller
         return redirect()->route('answers.index');
     }
 
-    // Remove the specified answer from storage
+    //Remove the specified answer from storage
     public function destroy(Answer $answer)
     {
         $answer->delete();
